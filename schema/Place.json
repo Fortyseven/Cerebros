@@ -1,0 +1,334 @@
+{
+    "$schema": "https://json-schema.org/draft-07/schema",
+    "$id": "https://example.com/schemas/Place.json",
+    "title": "Place",
+    "description": "A place.",
+    "type": "object",
+    "allOf": [
+        {
+            "$ref": "Thing.json"
+        }
+    ],
+    "properties": {
+        "address": {
+            "description": "Physical address.",
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "$ref": "subtypes/PostalAddress.json"
+                }
+            ]
+        },
+        "aggregateRating": {
+            "description": "Overall rating.",
+            "anyOf": [
+                {
+                    "type": "object",
+                    "description": "Placeholder for AggregateRating"
+                }
+            ]
+        },
+        "amenityFeature": {
+            "description": "Amenity features of the place.",
+            "anyOf": [
+                {
+                    "type": "object",
+                    "description": "Placeholder for LocationFeatureSpecification"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "description": "Placeholder for LocationFeatureSpecification"
+                    },
+                    "minItems": 1
+                }
+            ]
+        },
+        "branchCode": {
+            "type": "string",
+            "description": "Branch code identifier."
+        },
+        "containedInPlace": {
+            "description": "The larger place that contains this place.",
+            "anyOf": [
+                {
+                    "type": "object",
+                    "description": "Placeholder for Place"
+                },
+                {
+                    "type": "string",
+                    "format": "uri"
+                }
+            ]
+        },
+        "containsPlace": {
+            "description": "Places contained within.",
+            "anyOf": [
+                {
+                    "type": "object",
+                    "description": "Placeholder for Place"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "description": "Placeholder for Place"
+                    },
+                    "minItems": 1
+                }
+            ]
+        },
+        "event": {
+            "description": "An event at this location.",
+            "anyOf": [
+                {
+                    "type": "object",
+                    "description": "Placeholder for Event"
+                },
+                {
+                    "type": "string",
+                    "format": "uri"
+                }
+            ]
+        },
+        "events": {
+            "description": "Events at this location.",
+            "anyOf": [
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "description": "Placeholder for Event"
+                    },
+                    "minItems": 1
+                }
+            ]
+        },
+        "faxNumber": {
+            "type": "string",
+            "description": "Fax number."
+        },
+        "geo": {
+            "description": "Geocoordinates.",
+            "anyOf": [
+                {
+                    "type": "object",
+                    "description": "Placeholder for GeoCoordinates/GeoShape"
+                }
+            ]
+        },
+        "geoWithin": {
+            "description": "GeoShape that contains this place.",
+            "anyOf": [
+                {
+                    "type": "object",
+                    "description": "Placeholder for GeoShape"
+                }
+            ]
+        },
+        "globalLocationNumber": {
+            "type": "string",
+            "description": "GLN identifier."
+        },
+        "hasMap": {
+            "description": "URL of a map.",
+            "anyOf": [
+                {
+                    "type": "string",
+                    "format": "uri"
+                },
+                {
+                    "type": "object",
+                    "description": "Placeholder for Map"
+                }
+            ]
+        },
+        "isAccessibleForFree": {
+            "type": "boolean",
+            "description": "Whether free access."
+        },
+        "isicV4": {
+            "type": "string",
+            "description": "ISIC v4 code."
+        },
+        "latitude": {
+            "type": "number",
+            "description": "Latitude in WGS84."
+        },
+        "longitude": {
+            "type": "number",
+            "description": "Longitude in WGS84."
+        },
+        "logo": {
+            "description": "Logo image.",
+            "anyOf": [
+                {
+                    "type": "string",
+                    "format": "uri"
+                },
+                {
+                    "type": "object",
+                    "description": "Placeholder for ImageObject"
+                }
+            ]
+        },
+        "map": {
+            "description": "A map URL.",
+            "anyOf": [
+                {
+                    "type": "string",
+                    "format": "uri"
+                }
+            ]
+        },
+        "maps": {
+            "description": "Collection of map URLs.",
+            "anyOf": [
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "format": "uri"
+                    },
+                    "minItems": 1
+                }
+            ]
+        },
+        "maximumAttendeeCapacity": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Maximum allowed attendees."
+        },
+        "openingHoursSpecification": {
+            "description": "Detailed opening hours.",
+            "anyOf": [
+                {
+                    "type": "object",
+                    "description": "Placeholder for OpeningHoursSpecification"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "description": "Placeholder for OpeningHoursSpecification"
+                    },
+                    "minItems": 1
+                }
+            ]
+        },
+        "photo": {
+            "description": "A photo of the place.",
+            "anyOf": [
+                {
+                    "type": "object",
+                    "description": "Placeholder for ImageObject/Photograph"
+                },
+                {
+                    "type": "string",
+                    "format": "uri"
+                }
+            ]
+        },
+        "photos": {
+            "description": "Photos of the place.",
+            "anyOf": [
+                {
+                    "type": "array",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "type": "object",
+                                "description": "Placeholder for ImageObject/Photograph"
+                            },
+                            {
+                                "type": "string",
+                                "format": "uri"
+                            }
+                        ]
+                    },
+                    "minItems": 1
+                }
+            ]
+        },
+        "publicAccess": {
+            "type": "boolean",
+            "description": "Whether publicly accessible."
+        },
+        "review": {
+            "description": "A review of the place.",
+            "anyOf": [
+                {
+                    "type": "object",
+                    "description": "Placeholder for Review"
+                },
+                {
+                    "type": "string",
+                    "format": "uri"
+                }
+            ]
+        },
+        "reviews": {
+            "description": "Reviews of the place.",
+            "anyOf": [
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "description": "Placeholder for Review"
+                    },
+                    "minItems": 1
+                }
+            ]
+        },
+        "slogan": {
+            "type": "string",
+            "description": "Slogan associated with the place."
+        },
+        "smokingAllowed": {
+            "type": "boolean",
+            "description": "Whether smoking is allowed."
+        },
+        "specialOpeningHoursSpecification": {
+            "description": "Exceptions to opening hours.",
+            "anyOf": [
+                {
+                    "type": "object",
+                    "description": "Placeholder for OpeningHoursSpecification"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "description": "Placeholder for OpeningHoursSpecification"
+                    },
+                    "minItems": 1
+                }
+            ]
+        },
+        "telephone": {
+            "type": "string",
+            "description": "Telephone number."
+        },
+        "tourBookingPage": {
+            "type": "string",
+            "format": "uri",
+            "description": "Tour booking page URL."
+        }
+    },
+    "anyOf": [
+        {
+            "required": [
+                "address"
+            ]
+        },
+        {
+            "required": [
+                "latitude",
+                "longitude"
+            ]
+        }
+    ]
+}

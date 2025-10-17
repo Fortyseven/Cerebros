@@ -1,0 +1,333 @@
+{
+    "$schema": "https://json-schema.org/draft-07/schema",
+    "$id": "https://example.com/schemas/Person.json",
+    "title": "Person",
+    "description": "A person object",
+    "type": "object",
+    "allOf": [
+        {
+            "$ref": "Thing.json"
+        }
+    ],
+    "properties": {
+        "givenName": {
+            "type": "string",
+            "description": "First name.",
+            "examples": [
+                "J.R.",
+                "John"
+            ]
+        },
+        "familyName": {
+            "type": "string",
+            "description": "Last name.",
+            "examples": [
+                "Dobbs",
+                "Smith"
+            ]
+        },
+        "additionalNames": {
+            "type": "string"
+        },
+        "alias": {
+            "oneOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "minItems": 1
+                }
+            ]
+        },
+        "additionalName": {
+            "description": "An additional name (e.g. middle name).",
+            "oneOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "minItems": 1
+                }
+            ]
+        },
+        "honorificPrefix": {
+            "type": "string",
+            "description": "Prefix (e.g. Dr., Mrs.).",
+            "examples": [
+                "Dr.",
+                "Mrs."
+            ]
+        },
+        "honorificSuffix": {
+            "type": "string",
+            "description": "Suffix (e.g. Jr., III).",
+            "examples": [
+                "Jr.",
+                "III"
+            ]
+        },
+        "birthDate": {
+            "type": "string",
+            "format": "date",
+            "description": "Date of birth."
+        },
+        "deathDate": {
+            "type": "string",
+            "format": "date",
+            "description": "Date of death."
+        },
+        "birthPlace": {
+            "description": "Place of birth.",
+            "anyOf": [
+                {
+                    "$ref": "Place.json"
+                },
+                {
+                    "type": "string",
+                    "format": "uri"
+                }
+            ]
+        },
+        "deathPlace": {
+            "description": "Place of death.",
+            "anyOf": [
+                {
+                    "$ref": "Place.json"
+                },
+                {
+                    "type": "string",
+                    "format": "uri"
+                }
+            ]
+        },
+        "gender": {
+            "description": "Gender of the person.",
+            "oneOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "object",
+                    "description": "Placeholder for GenderType"
+                }
+            ]
+        },
+        "email": {
+            "type": "string",
+            "format": "email",
+            "description": "Email address."
+        },
+        "telephone": {
+            "type": "string",
+            "description": "Telephone number."
+        },
+        "faxNumber": {
+            "type": "string",
+            "description": "Fax number."
+        },
+        "jobTitle": {
+            "type": "string",
+            "description": "Job title."
+        },
+        "worksFor": {
+            "description": "Organizations the person works for.",
+            "anyOf": [
+                {
+                    "type": "object",
+                    "description": "Placeholder for Organization"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "description": "Placeholder for Organization"
+                    },
+                    "minItems": 1
+                }
+            ]
+        },
+        "affiliation": {
+            "description": "Organizations the person is affiliated with.",
+            "anyOf": [
+                {
+                    "type": "object",
+                    "description": "Placeholder for Organization"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "description": "Placeholder for Organization"
+                    },
+                    "minItems": 1
+                }
+            ]
+        },
+        "alumniOf": {
+            "description": "Organization(s) / educational institution(s) the person is an alumni of.",
+            "anyOf": [
+                {
+                    "type": "object",
+                    "description": "Placeholder for Organization/EducationalOrganization"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "description": "Placeholder for Organization/EducationalOrganization"
+                    },
+                    "minItems": 1
+                }
+            ]
+        },
+        "knowsAbout": {
+            "description": "Subjects known about.",
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "minItems": 1
+                }
+            ]
+        },
+        "knowsLanguage": {
+            "description": "Languages known.",
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "minItems": 1
+                },
+                {
+                    "type": "object",
+                    "description": "Placeholder for Language"
+                }
+            ]
+        },
+        "nationality": {
+            "description": "Nationality.",
+            "anyOf": [
+                {
+                    "type": "object",
+                    "description": "Placeholder for Country"
+                },
+                {
+                    "type": "string"
+                }
+            ]
+        },
+        "occupation": {
+            "description": "A description of the person’s occupation.",
+            "anyOf": [
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "minItems": 1
+                },
+                {
+                    "type": "string"
+                }
+            ]
+        },
+        "height": {
+            "description": "Person's height.",
+            "anyOf": [
+                {
+                    "type": "object",
+                    "description": "Placeholder for QuantitativeValue"
+                },
+                {
+                    "type": "string"
+                }
+            ]
+        },
+        "weight": {
+            "description": "Person's weight.",
+            "anyOf": [
+                {
+                    "type": "object",
+                    "description": "Placeholder for QuantitativeValue"
+                },
+                {
+                    "type": "string"
+                }
+            ]
+        },
+        "spouse": {
+            "description": "The person's spouse.",
+            "anyOf": [
+                {
+                    "type": "object",
+                    "description": "Placeholder for Person"
+                },
+                {
+                    "type": "string",
+                    "format": "uri"
+                }
+            ]
+        },
+        "children": {
+            "description": "The person's children.",
+            "anyOf": [
+                {
+                    "type": "object",
+                    "description": "Placeholder for Person"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "description": "Placeholder for Person"
+                    },
+                    "minItems": 1
+                }
+            ]
+        },
+        "parent": {
+            "description": "A parent of this person.",
+            "anyOf": [
+                {
+                    "type": "object",
+                    "description": "Placeholder for Person"
+                },
+                {
+                    "type": "string",
+                    "format": "uri"
+                }
+            ]
+        }
+    },
+    "anyOf": [
+        {
+            "required": [
+                "alias"
+            ]
+        },
+        {
+            "required": [
+                "givenName",
+                "familyName"
+            ]
+        }
+    ]
+}

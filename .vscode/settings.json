@@ -1,0 +1,14 @@
+{
+    "files.exclude": {
+        "server/.venv/**/*": true,
+        "**/.venv": true,
+        "**/node_modules": true,
+        "**/.vscode": true
+    },
+    "yaml.schemas": {
+        "schema/Person.json": "**/*.Person.yml",
+        "schema/Place.json": "**/*.Place.yml",
+        "schema/Thing.json": "**/*.Thing.yml",
+        "schema/subtypes/PostalAddress.json": "**/*.PostalAddress.yml"
+    }
+}

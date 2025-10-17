@@ -1,0 +1,49 @@
+{
+    "$schema": "https://json-schema.org/draft-07/schema",
+    "$id": "https://example.com/schemas/Place.json",
+    "title": "Place",
+    "description": "A place.",
+    "type": "object",
+    "properties": {
+        "streetAddress": {
+            "type": "string",
+            "description": "The street address.",
+            "examples": [
+                "1600 Amphitheatre Parkway",
+                "1 Infinite Loop"
+            ]
+        },
+        "postOfficeBoxNumber": {
+            "type": "string",
+            "description": "The post office box number.",
+            "examples": [
+                "PO Box 123",
+                "782"
+            ]
+        },
+        "addressLocality": {
+            "type": "string",
+            "description": "The locality (e.g. city, town).",
+            "examples": [
+                "Mountain View",
+                "New York City"
+            ]
+        },
+        "addressRegion": {
+            "type": "string",
+            "description": "The region. (e.g. state, province)",
+            "examples": [
+                "CA",
+                "NY"
+            ]
+        },
+        "postalCode": {
+            "type": "string",
+            "description": "The postal code. (e.g. ZIP code, postal code)",
+            "examples": [
+                "94043",
+                "SW1A 1AA"
+            ]
+        }
+    }
+}
