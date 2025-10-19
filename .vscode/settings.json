@@ -6,9 +6,9 @@
         "**/.vscode": true
     },
     "yaml.schemas": {
-        "schema/Person.json": "**/*.Person.yml",
-        "schema/Place.json": "**/*.Place.yml",
-        "schema/Thing.json": "**/*.Thing.yml",
-        "schema/subtypes/PostalAddress.json": "**/*.PostalAddress.yml"
+        "app/schema/Person.json": "**/*.Person.yml",
+        "app/schema/Place.json": "**/*.Place.yml",
+        "app/schema/Thing.json": "**/*.Thing.yml",
+        "app/schema/subtypes/PostalAddress.json": "**/*.PostalAddress.yml"
     }
 }
