@@ -1,6 +1,8 @@
-def main():
-    print("Hello from cerebros!")
+"""App package root.
 
+Currently houses dynamic command loading in ``app.commands``.
+"""
 
-if __name__ == "__main__":
-    main()
+from __future__ import annotations
+
+__all__ = ["commands"]

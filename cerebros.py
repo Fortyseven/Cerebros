@@ -15,12 +15,16 @@ import argparse
 import sys
 from typing import Sequence, Mapping, Any
 
+from app.cli import CommandContext
+
 # ---------------------------------------------------------------------------
 # Global parsing
 # ---------------------------------------------------------------------------
 
 
 def build_global_parser() -> argparse.ArgumentParser:
+    import os
+
     parser = argparse.ArgumentParser(
         prog="cerebro", add_help=False, description="Cerebrosphere CLI"
     )
@@ -34,14 +38,16 @@ def build_global_parser() -> argparse.ArgumentParser:
         default=0,
         help="Increase verbosity (repeat for more)",
     )
+    parser.add_argument(
+        "-w",
+        "--workspace",
+        default=os.getcwd(),
+        help="Workspace directory (default: current directory)",
+    )
     return parser
 
 
-class CommandContext:
-    """Holds global options available to command handlers."""
-
-    def __init__(self, verbose: int = 0) -> None:
-        self.verbose = verbose
+# CommandContext now lives in app.cli to avoid circular imports.
 
 
 # ---------------------------------------------------------------------------
@@ -59,10 +65,14 @@ def print_global_help(
     parser: argparse.ArgumentParser, commands: Mapping[str, Any]
 ) -> None:
     parser.print_usage()
+
     print("\nCommands:")
+
     longest = max((len(name) for name in commands), default=0)
+
     for name, cmd in sorted(commands.items()):
         print(f"  {name.ljust(longest)}  {cmd.help}")
+
     print("\nUse 'cerebro <command> --help' for command-specific help.")
 
 
@@ -71,31 +81,16 @@ def main(argv: list[str] | None = None) -> int:  # noqa: D401 (simple)
         argv = sys.argv[1:]
 
     global_parser = build_global_parser()
-    # Parse only global flags up to the first non-option token (command)
-    # We stop at first arg that does not start with '-'
-    global_args: list[str] = []
-    remainder: list[str] = []
-    for i, token in enumerate(argv):
-        if token == "--":
-            # Explicit end of options; rest is remainder (command must follow)
-            global_args = argv[: i + 1]
-            remainder = argv[i + 1 :]
-            break
-        if token.startswith("-") and token != "-":
-            continue
-        # First non-option token is command
-        global_args = argv[:i]
-        remainder = argv[i:]
-        break
-    else:
-        # All tokens were options (or none)
-        global_args = argv
-        remainder = []
-
+    # Use parse_known_args to robustly separate global options from command and its args
     try:
-        gns = global_parser.parse_args(global_args)
-    except SystemExit as e:  # argparse already printed message
+        gns, remainder = global_parser.parse_known_args(argv)
+    except SystemExit as e:
         return e.code
+
+    # Set shared workspace state
+    import app.state
+
+    app.state.workspace = gns.workspace
 
     commands = load_commands()
 
@@ -128,7 +123,7 @@ def main(argv: list[str] | None = None) -> int:  # noqa: D401 (simple)
     except SystemExit as e:  # argparse already printed
         return e.code
     handler = loaded.run
-    ctx = CommandContext(verbose=gns.verbose)
+    ctx = CommandContext(verbose=gns.verbose, workspace=gns.workspace)
     try:
         return handler(ctx, ns)
     except SystemExit as e:  # propagate argparse exits inside handler
