@@ -25,7 +25,6 @@ def build_parser(prog: str) -> argparse.ArgumentParser:
 def run(ctx: CommandContext, ns: argparse.Namespace) -> int:
     import app.state
     import os
-    from rich.console import Console
     from rich.text import Text
 
     if ctx.verbose:
@@ -51,7 +50,7 @@ def run(ctx: CommandContext, ns: argparse.Namespace) -> int:
             print(f"[debug]   {f}")
 
     # Search for term in values and report line numbers
-    console = Console()
+    console = ctx.console
     found_any = False
     term = ns.term.lower()
     for yml_file in yml_files:

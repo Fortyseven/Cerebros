@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """Cerebros CLI entrypoint.
 
 Behavior change: the first non-option token is treated as the command. Global
@@ -44,6 +45,15 @@ def build_global_parser() -> argparse.ArgumentParser:
         default=os.getcwd(),
         help="Workspace directory (default: current directory)",
     )
+
+    parser.add_argument(
+        "-nc",
+        "--no-color",
+        action="store_true",
+        help="Disable colored output",
+        dest="no_color",
+    )
+
     return parser
 
 
@@ -123,7 +133,16 @@ def main(argv: list[str] | None = None) -> int:  # noqa: D401 (simple)
     except SystemExit as e:  # argparse already printed
         return e.code
     handler = loaded.run
-    ctx = CommandContext(verbose=gns.verbose, workspace=gns.workspace)
+    from rich.console import Console
+
+    color_system = None if gns.no_color else "auto"
+    console = Console(color_system=color_system)
+    ctx = CommandContext(
+        verbose=gns.verbose,
+        workspace=gns.workspace,
+        no_color=gns.no_color,
+        console=console,
+    )
     try:
         return handler(ctx, ns)
     except SystemExit as e:  # propagate argparse exits inside handler
