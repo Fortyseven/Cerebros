@@ -25,6 +25,8 @@ def build_parser(prog: str) -> argparse.ArgumentParser:
 def run(ctx: CommandContext, ns: argparse.Namespace) -> int:
     import app.state
     import os
+    from rich.console import Console
+    from rich.text import Text
 
     if ctx.verbose:
         print(f"[debug] Searching for term={ns.term!r}")
@@ -49,6 +51,7 @@ def run(ctx: CommandContext, ns: argparse.Namespace) -> int:
             print(f"[debug]   {f}")
 
     # Search for term in values and report line numbers
+    console = Console()
     found_any = False
     term = ns.term.lower()
     for yml_file in yml_files:
@@ -56,7 +59,7 @@ def run(ctx: CommandContext, ns: argparse.Namespace) -> int:
             with open(yml_file, "r", encoding="utf-8") as f:
                 lines = f.readlines()
         except Exception as e:
-            print(f"[warn] Could not read {yml_file}: {e}")
+            console.print(f"[warn] Could not read {yml_file}: {e}", style="yellow")
             continue
         matches = []
         last_key = None
@@ -86,14 +89,25 @@ def run(ctx: CommandContext, ns: argparse.Namespace) -> int:
                 file_path = os.path.abspath(yml_file)
             else:
                 file_path = os.path.relpath(yml_file, os.getcwd())
-            print(f"\n{file_path}")
+            console.print(f"\n{file_path}", style="bold yellow")
             for lineno, prop, m in matches:
-                if getattr(ns, "lines", False):
-                    print(f"- Line {lineno}, {prop}: {m}")
+                # Highlight the matching part in the property value
+                lower_m = m.lower()
+                start = lower_m.find(term)
+                if start != -1:
+                    end = start + len(term)
+                    text = Text(m)
+                    text.stylize("bold red", start, end)
                 else:
-                    print(f"- {prop}: {m}")
+                    text = Text(m)
+                if getattr(ns, "lines", False):
+                    console.print(f"- Line {lineno}, {prop}: ", end="")
+                    console.print(text)
+                else:
+                    console.print(f"- [blue]{prop}[/blue]: ", end="")
+                    console.print(text)
     if not found_any:
-        print(f"No matches found for: {ns.term}")
+        console.print(f"No matches found for: {ns.term}", style="red")
     return 0
 
 
