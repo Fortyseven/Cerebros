@@ -1,0 +1,533 @@
+{
+    "$schema": "https://json-schema.org/draft-07/schema",
+    "$id": "https://example.com/schemas/Organization.json",
+    "title": "Organization",
+    "description": "An organization such as a school, NGO, corporation, club, etc.",
+    "type": "object",
+    "allOf": [
+        {
+            "$ref": "Thing.json"
+        }
+    ],
+    "properties": {
+        "legalName": {
+            "type": "string",
+            "description": "The official name of the organization, e.g. the registered company name."
+        },
+        "alternateName": {
+            "type": "string",
+            "description": "An alias for the organization."
+        },
+        "email": {
+            "type": "string",
+            "format": "email",
+            "description": "Email address."
+        },
+        "telephone": {
+            "type": "string",
+            "description": "Telephone number."
+        },
+        "faxNumber": {
+            "type": "string",
+            "description": "Fax number."
+        },
+        "address": {
+            "description": "Physical address of the organization.",
+            "anyOf": [
+                {
+                    "$ref": "subtypes/PostalAddress.json"
+                },
+                {
+                    "type": "string"
+                }
+            ]
+        },
+        "founder": {
+            "description": "A person or organization that founded this organization.",
+            "anyOf": [
+                {
+                    "anyOf": [
+                        {
+                            "$ref": "Person.json"
+                        },
+                        {
+                            "$ref": "Organization.json"
+                        }
+                    ]
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "$ref": "Person.json"
+                            },
+                            {
+                                "$ref": "Organization.json"
+                            }
+                        ]
+                    },
+                    "minItems": 1
+                }
+            ]
+        },
+        "foundingDate": {
+            "type": "string",
+            "format": "date",
+            "description": "The date that this organization was founded."
+        },
+        "foundingLocation": {
+            "description": "The place where the Organization was founded.",
+            "anyOf": [
+                {
+                    "$ref": "Place.json"
+                },
+                {
+                    "type": "string"
+                }
+            ]
+        },
+        "dissolutionDate": {
+            "type": "string",
+            "format": "date",
+            "description": "The date that this organization was dissolved."
+        },
+        "numberOfEmployees": {
+            "description": "The number of employees in an organization.",
+            "type": "integer"
+        },
+        "member": {
+            "description": "A member of this organization. (Person or Organization)",
+            "anyOf": [
+                {
+                    "anyOf": [
+                        {
+                            "$ref": "Person.json"
+                        },
+                        {
+                            "$ref": "Organization.json"
+                        }
+                    ]
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "$ref": "Person.json"
+                            },
+                            {
+                                "$ref": "Organization.json"
+                            }
+                        ]
+                    },
+                    "minItems": 1
+                }
+            ]
+        },
+        "employee": {
+            "description": "Someone working for this organization.",
+            "anyOf": [
+                {
+                    "$ref": "Person.json"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "$ref": "Person.json"
+                    },
+                    "minItems": 1
+                }
+            ]
+        },
+        "parentOrganization": {
+            "description": "The larger organization that this organization is a subOrganization of, if any.",
+            "anyOf": [
+                {
+                    "$ref": "Organization.json"
+                },
+                {
+                    "type": "string"
+                }
+            ]
+        },
+        "subOrganization": {
+            "description": "A relationship between two organizations where the first includes the second, e.g., as a subsidiary.",
+            "anyOf": [
+                {
+                    "$ref": "Organization.json"
+                },
+                {
+                    "type": "string"
+                },
+                {
+                    "items": {
+                        "anyOf": [
+                            {
+                                "$ref": "Organization.json"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ]
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                }
+            ]
+        },
+        "logo": {
+            "description": "An associated logo.",
+            "anyOf": [
+                {
+                    "type": "string",
+                    "format": "uri"
+                },
+                {
+                    "items": {
+                        "type": "string",
+                        "format": "uri"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                }
+            ]
+        },
+        "taxID": {
+            "type": "string",
+            "description": "The Tax / Fiscal ID of the organization."
+        },
+        "vatID": {
+            "type": "string",
+            "description": "The Value-added Tax ID of the organization."
+        },
+        "duns": {
+            "type": "string",
+            "description": "The Dun & Bradstreet DUNS number for identifying an organization."
+        },
+        "leiCode": {
+            "type": "string",
+            "description": "An organization identifier that uniquely identifies a legal entity as defined in ISO 17442."
+        },
+        "slogan": {
+            "type": "string",
+            "description": "A slogan or motto associated with the organization."
+        },
+        "department": {
+            "description": "A relationship between an organization and a department of that organization.",
+            "type": "string"
+        },
+        "alumni": {
+            "description": "Alumni of an organization.",
+            "anyOf": [
+                {
+                    "$ref": "Person.json"
+                },
+                {
+                    "type": "string"
+                },
+                {
+                    "items": {
+                        "anyOf": [
+                            {
+                                "$ref": "Person.json"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ]
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                }
+            ]
+        },
+        "areaServed": {
+            "description": "The geographic area where a service or offered item is provided.",
+            "type": "string"
+        },
+        "award": {
+            "description": "An award won by or for this item.",
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "minItems": 1
+                }
+            ]
+        },
+        "brand": {
+            "description": "The brand(s) associated with a product or service.",
+            "anyOf": [
+                {
+                    "$ref": "Organization.json"
+                },
+                {
+                    "type": "string"
+                },
+                {
+                    "items": {
+                        "anyOf": [
+                            {
+                                "$ref": "Organization.json"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ]
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                }
+            ]
+        },
+        "contactPoint": {
+            "description": "A contact point for a person or organization.",
+            "anyOf": [
+                {
+                    "$ref": "Person.json"
+                },
+                {
+                    "type": "string"
+                },
+                {
+                    "items": {
+                        "anyOf": [
+                            {
+                                "$ref": "Person.json"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ]
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                }
+            ]
+        },
+        "event": {
+            "description": "Upcoming or past event associated with this organization.",
+            "anyOf": [
+                {
+                    "$ref": "Event.json"
+                },
+                {
+                    "type": "string"
+                },
+                {
+                    "items": {
+                        "anyOf": [
+                            {
+                                "$ref": "Event.json"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ]
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                }
+            ]
+        },
+        "funder": {
+            "description": "A person or organization that supports (sponsors) something through some kind of financial contribution.",
+            "anyOf": [
+                {
+                    "anyOf": [
+                        {
+                            "$ref": "Person.json"
+                        },
+                        {
+                            "$ref": "Organization.json"
+                        }
+                    ]
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "$ref": "Person.json"
+                            },
+                            {
+                                "$ref": "Organization.json"
+                            }
+                        ]
+                    },
+                    "minItems": 1
+                }
+            ]
+        },
+        "globalLocationNumber": {
+            "type": "string",
+            "description": "The Global Location Number (GLN) of the organization."
+        },
+        "iso6523Code": {
+            "type": "string",
+            "description": "An organization identifier as defined in ISO 6523(-1)."
+        },
+        "keywords": {
+            "description": "Keywords or tags used to describe some item.",
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "minItems": 1
+                }
+            ]
+        },
+        "location": {
+            "description": "The location of the organization.",
+            "anyOf": [
+                {
+                    "$ref": "Place.json"
+                },
+                {
+                    "type": "string"
+                }
+            ]
+        },
+        "makesOffer": {
+            "description": "A pointer to products or services offered by the organization.",
+            "anyOf": [
+                {
+                    "type": "object",
+                    "description": "Placeholder for Offer"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "description": "Placeholder for Offer"
+                    },
+                    "minItems": 1
+                }
+            ]
+        },
+        "memberOf": {
+            "description": "An Organization (or ProgramMembership) to which this Organization belongs.",
+            "anyOf": [
+                {
+                    "type": "object",
+                    "description": "Placeholder for Organization/ProgramMembership"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "description": "Placeholder for Organization/ProgramMembership"
+                    },
+                    "minItems": 1
+                }
+            ]
+        },
+        "nonprofitStatus": {
+            "type": "string",
+            "description": "Legal status of a non-profit organization."
+        },
+        "owns": {
+            "description": "Products owned by the organization.",
+            "anyOf": [
+                {
+                    "type": "object",
+                    "description": "Placeholder for OwnershipInfo/Product"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "description": "Placeholder for OwnershipInfo/Product"
+                    },
+                    "minItems": 1
+                }
+            ]
+        },
+        "seeks": {
+            "description": "A pointer to products or services sought by the organization.",
+            "anyOf": [
+                {
+                    "type": "object",
+                    "description": "Placeholder for Demand"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "description": "Placeholder for Demand"
+                    },
+                    "minItems": 1
+                }
+            ]
+        },
+        "sponsor": {
+            "description": "A person or organization that supports a thing through a pledge, promise, or financial contribution.",
+            "anyOf": [
+                {
+                    "anyOf": [
+                        {
+                            "$ref": "Person.json"
+                        },
+                        {
+                            "$ref": "Organization.json"
+                        }
+                    ]
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "$ref": "Person.json"
+                            },
+                            {
+                                "$ref": "Organization.json"
+                            }
+                        ]
+                    },
+                    "minItems": 1
+                }
+            ]
+        },
+        "url": {
+            "description": "URL of the organization",
+            "anyOf": [
+                {
+                    "type": "string",
+                    "format": "uri"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "format": "uri"
+                    },
+                    "minItems": 1
+                }
+            ]
+        }
+    },
+    "anyOf": [
+        {
+            "required": [
+                "legalName"
+            ]
+        },
+        {
+            "required": [
+                "alternateName"
+            ]
+        }
+    ]
+}

@@ -11,38 +11,29 @@
         },
         "name": {
             "type": "string",
-            "description": "The name of the item."
+            "description": "The name of the thing"
         },
         "alternateName": {
-            "type": "string",
-            "description": "An alternate name for the item."
-        },
-        "description": {
-            "type": "string",
-            "description": "A description of the item."
-        },
-        "disambiguatingDescription": {
-            "type": "string",
-            "description": "A short description to disambiguate from other, similar items."
-        },
-        "identifier": {
-            "description": "Identifier for the item (string, URI, or object).",
+            "description": "An alternate name for the thing",
             "anyOf": [
                 {
                     "type": "string"
                 },
                 {
-                    "type": "string",
-                    "format": "uri"
-                },
-                {
-                    "type": "object",
-                    "description": "Placeholder for PropertyValue"
+                    "items": {
+                        "type": "string"
+                    },
+                    "minItems": 1,
+                    "type": "array"
                 }
             ]
         },
+        "description": {
+            "type": "string",
+            "description": "A description of the thing"
+        },
         "image": {
-            "description": "Image(s) of the item (URL or object).",
+            "description": "Image(s) of the thing (URL or object).",
             "anyOf": [
                 {
                     "type": "string",
@@ -58,35 +49,51 @@
                 }
             ]
         },
-        "potentialAction": {
-            "type": "object",
-            "description": "Indicates a potential Action."
-        },
         "sameAs": {
-            "description": "Reference URLs that unambiguously indicate the item’s identity.",
+            "description": "References",
             "anyOf": [
                 {
-                    "type": "string",
-                    "format": "uri"
+                    "$ref": "Thing.json"
                 },
                 {
                     "type": "array",
                     "items": {
-                        "type": "string",
-                        "format": "uri"
+                        "$ref": "Thing.json"
                     }
                 }
             ]
         },
         "url": {
-            "type": "string",
-            "format": "uri",
-            "description": "URL of the item."
+            "description": "Related URLs",
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "items": {
+                        "type": "string"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                }
+            ]
         },
-        "additionalType": {
-            "type": "string",
-            "format": "uri",
-            "description": "An additional type (URL) for the item."
+        "relationship": {
+            "anyOf": [
+                {
+                    "type": "array",
+                    "items": {
+                        "$ref": "RelationshipType.json"
+                    },
+                    "minItems": 1
+                },
+                {
+                    "$ref": "RelationshipType.json"
+                }
+            ]
         }
-    }
+    },
+    "required": [
+        "id"
+    ]
 }
