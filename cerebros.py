@@ -16,6 +16,10 @@ import argparse
 import sys
 from typing import Sequence, Mapping, Any
 
+
+import os
+
+import os
 from app.cli import CommandContext
 
 # ---------------------------------------------------------------------------
@@ -42,8 +46,8 @@ def build_global_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "-w",
         "--workspace",
-        default=os.getcwd(),
-        help="Workspace directory (default: current directory)",
+        default=os.path.join(os.getcwd(), "workspace"),
+        help="Workspace directory (default: ./workspace)",
     )
 
     parser.add_argument(
@@ -126,6 +130,10 @@ def main(argv: list[str] | None = None) -> int:  # noqa: D401 (simple)
         parser = loaded.build_parser(f"cerebro {loaded.name}")
         parser.print_help()
         return 0
+
+    # Create workspace directory if it doesn't exist, but only now
+    if gns.workspace and not os.path.exists(gns.workspace):
+        os.makedirs(gns.workspace, exist_ok=True)
 
     parser = loaded.build_parser(f"cerebro {loaded.name}")
     try:
