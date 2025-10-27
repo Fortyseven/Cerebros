@@ -18,8 +18,6 @@ from typing import Sequence, Mapping, Any
 
 
 import os
-
-import os
 from app.cli import CommandContext
 
 # ---------------------------------------------------------------------------
