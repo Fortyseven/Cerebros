@@ -100,7 +100,7 @@ def run(ctx: CommandContext, ns: argparse.Namespace) -> int:
                 else:
                     text = Text(m)
                 if getattr(ns, "lines", False):
-                    console.print(f"- Line {lineno}, {prop}: ", end="")
+                    console.print(f"- Line {lineno}, [blue]{prop}[/blue]: ", end="")
                     console.print(text)
                 else:
                     console.print(f"- [blue]{prop}[/blue]: ", end="")
